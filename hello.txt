@@ -1,1 +1,4 @@
-hgoigpoigit checkout -b 
+hgoigpoigit checkout git  jjj jjj
+
+d
+l
