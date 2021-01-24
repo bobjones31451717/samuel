@@ -3,7 +3,5 @@ hgoigpoigit checkout git  jjj jjj
 d
 likho
 ggter
-wabalabadabda
-new chenges
 l
-uytey
+hello world
