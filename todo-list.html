@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+ 
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div id="addTask" class="header">
+  <h1 style="margin:5px">My To Do List</h1>
+  <div class="makeTask">
+    <input type="text" id="textToAdd" placeholder="whatTodo?">
+    <div id="plusIcone">
+      <i class="fa fa-plus" id="addIcon" style="font-size:40px;color:#4e4caf;" onclick="newElement()"></i>
+    </div>
+  </div>
+    <ul id="myUL">
+    
+    </ul>
+    <div id="moreOptions">
+      <button onclick="handlWhenChecked(this)" class= "toolBar">hide all</button>
+      <button onclick="handlWhenChecked(this)" class= "toolBar">delete all done tasks</button>
+      <button onclick="handlWhenChecked(this)" class= "toolBar">show all</button>
+      <button onclick="sort(this)" class= "toolBar">sort</button>
+    </div>
+  </div>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</body>
+<style>
+
+h1{
+    width:100%;
+    padding-left: 194px;
+}
+
+
+
+.makeTask{
+  display: flex;
+  justify-content : center;
+}
+
+#myUL{
+  padding-left: 36px;
+  overflow-y: scroll;
+  height: 600px;
+  width: 90%;
+}
+
+#textToAdd{
+  width: 70%;
+  padding: 10px 20px;
+  margin: 10px 0;
+  display: inline-block;
+  border: 2px solid #4e4caf;
+  outline-color: #4e4caf;
+  box-sizing: border-box;
+}
+
+#plusIcone{
+  width:10%;
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
+}
+
+.deleteAndCheck{
+display: inline-block;
+padding-right: 10px;
+display: flex;
+align-items: center;
+}
+
+.delete
+ {
+  background-color: #4e4caf;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  height: 30px;
+}
+
+
+.toolBar
+ {
+  font-size: 12px;
+  background-color: #4e4caf;
+  border: none;
+  color: white;
+  padding: 12px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+button{
+  cursor: pointer;
+}
+
+.checkbox {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  margin-top: 11px;
+  margin-right: 8px;
+}
+
+p{
+  font-size: 25px;
+  font-family: "Papyrus", Times, serif;
+  margin: 0px;
+}
+
+.checked{
+  text-decoration: line-through;
+}
+
+.checkAndText{
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  min-width: 250px;
+  
+}
+
+#addTask{
+  margin-top: 50px;
+  width: 35%;
+  position: fixed;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -0%);
+}
+.task{
+  padding-left: 25px;
+  padding-right: 10px;
+  list-style-type: none;
+  display: flex;
+  justify-content : space-between;
+}
+
+#moreOptions{
+    width: 88%;
+    padding-top: 10px;
+    padding-left: 60px;
+}
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+
+/* Remove margins and padding from the list */
+
+</style>
+
+
+<script>
+/*
+ const hideAll = () => {
+   alert(this);
+    let ul = document.getElementById("myUL");
+    for (let i = 1; i < ul.childNodes.length; i++) {
+      let li = ul.childNodes[i];
+      if (li.checked==true){
+        li.style.display = "none";
+    }
+    }
+}
+*/
+function handlWhenChecked(e){
+  let ul = document.getElementById("myUL");
+    for (let i = 1; i < ul.childNodes.length; i++) {
+      let li = ul.childNodes[i];
+      if (li.checked==true){
+        switch(e.textContent){
+          case "show all":
+            li.style.display = "";
+            break;
+          case "hide all":
+            li.style.display = "none";
+            break;
+          case "delete all done tasks":
+            li.remove();
+            i--;
+        }
+      }
+    }
+}
+/*
+function deleteAllDoneTasks(){
+  let ul = document.getElementById("myUL");
+    for (let i = 1; i < ul.childNodes.length; i++) {
+
+        if (ul.childNodes[i].childNodes[1].firstElementChild.checked==true){
+          document.getElementById("myUL").childNodes[i].remove();
+          i--;
+        }
+      
+    }
+}
+*/
+
+function getSmallestVal(LIlist){
+  let lowestVal= LIlist[0].textValue;
+  let king= LIlist[0];
+  LIlist.forEach((match) => {
+    if(match.textValue<lowestVal){
+      lowestVal= match.textValue;
+      king= match;
+    }
+    });
+  return king;
+}
+
+function removeItem (arr, value){
+  let deletedOne= false;
+  arr = arr.filter(item => { 
+    if((item.textValue === value)&&(deletedOne==false)){
+      deletedOne=true;
+      return false;
+    }
+    return true;
+  });
+  return arr;
+}
+
+function sort(){
+  let matches= []
+  let ul = document.getElementById("myUL");
+  for (let i = 1; i < ul.childNodes.length; i++) {
+    let li = ul.childNodes[i];
+          matches.push(li);
+          li.remove();
+          i--;
+    }
+    matches.forEach((match) => {
+      let elemToAdd= getSmallestVal(matches);
+      ul.appendChild(elemToAdd);
+      matches= removeItem(matches,elemToAdd.firstChild.textContent); 
+    });
+}
+
+function createCheckBox(newLi){
+  let cbox = document.createElement("INPUT");
+  cbox.setAttribute("type", "checkbox");
+  cbox.addEventListener('click', () =>{
+    newLi.checked= true;
+    newLi.classList.toggle('checked');
+  });
+    //ev.target.parentElement.parentElement.firstElementChild.classList.toggle('checked');
+  cbox.classList.add("checkbox");
+  return cbox;
+}
+
+
+function createDeleteButton(newLi){
+  let btn = document.createElement("BUTTON");
+  btn.innerHTML = "<i class='fa fa-trash'>";  
+  btn.classList.add('delete');
+  btn.addEventListener('click', () =>{
+    newLi.remove();
+  });
+  return btn
+}
+
+function combineElements(...elements){
+  let container = document.createElement("DIV");
+  container.classList.add("checkAndText");
+  for (let elem of elements){
+    container.appendChild(elem);
+  }
+  return container;
+}
+
+function createTextElement(){
+  let inputValue = document.getElementById("textToAdd").value;
+  if (inputValue === '') {
+    return null;
+  } 
+  let para = document.createElement("p");
+  para.innerHTML = inputValue;
+  return para;
+}
+
+document.getElementById("textToAdd").addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("addIcon").click();
+  }
+});
+
+function newElement() {
+  let newLi = document.createElement("li");
+  newLi.classList.add('task');
+  let btn = createDeleteButton(newLi);
+  let todoText = createTextElement(newLi);
+  let cbox = createCheckBox(newLi);
+  if (todoText===null){
+    alert("no to do task added");
+    return;
+  }
+  newLi.textValue = todoText.innerText;
+  let container = combineElements(cbox,todoText);
+  newLi.appendChild(container);
+  newLi.appendChild(btn);
+  document.getElementById("myUL").appendChild(newLi);
+  document.getElementById("textToAdd").value= "";
+}
+</script>
+</html>
