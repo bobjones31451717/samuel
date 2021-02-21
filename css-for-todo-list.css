@@ -89,7 +89,7 @@ p{
   text-decoration: line-through;
 }
 
-.combined-elem{
+.left-side-of-to-do{
   display: flex;
   justify-content: center;
 }
