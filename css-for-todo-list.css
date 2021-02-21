@@ -1,0 +1,130 @@
+h1{
+    width:100%;
+    padding-left: 194px;
+}
+
+
+
+.makeTask{
+  display: flex;
+  justify-content : center;
+}
+
+#myUL{
+  padding-left: 36px;
+  overflow-y: scroll;
+  height: 600px;
+  width: 90%;
+}
+
+#textToAdd{
+  width: 70%;
+  padding: 10px 20px;
+  margin: 10px 0;
+  display: inline-block;
+  border: 2px solid #4e4caf;
+  outline-color: #4e4caf;
+  box-sizing: border-box;
+}
+
+#header{
+    margin: 5px;
+}
+
+#plusIconContainer{
+  width:10%;
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
+}
+
+#plusIcon{
+    font-size:40px;
+    color:#4e4caf;
+}
+
+.delete
+ {
+  background-color: #4e4caf;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  height: 30px;
+}
+
+
+.toolBar
+ {
+  font-size: 12px;
+  background-color: #4e4caf;
+  border: none;
+  color: white;
+  padding: 12px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+button{
+  cursor: pointer;
+}
+
+.checkbox {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  margin-top: 11px;
+  margin-right: 8px;
+}
+
+p{
+  font-size: 25px;
+  font-family: "Papyrus", Times, serif;
+  margin: 0px;
+}
+
+.checked{
+  text-decoration: line-through;
+}
+
+.combined-elem{
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  min-width: 250px;
+  
+}
+
+.toDoList{
+  margin-top: 50px;
+  width: 35%;
+  position: fixed;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -0%);
+}
+.task{
+  padding-left: 25px;
+  padding-right: 10px;
+  list-style-type: none;
+  display: flex;
+  justify-content : space-between;
+}
+
+#moreOptions{
+    width: 88%;
+    padding-top: 10px;
+    padding-left: 60px;
+}
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+
+/* Remove margins and padding from the list */
