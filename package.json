@@ -1,0 +1,36 @@
+{
+  "name": "samuel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Untitled-1.js",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "body-parser": "^1.19.0",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.4.0",
+    "mocha": "^8.3.2",
+    "mongodb": "^3.6.4",
+    "should": "^13.2.3",
+    "should-http": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "cross-env URL=mongodb://127.0.0.1:27017/todoTest DB_NAME=todoTest COLLECTION_NAME=todosTest PORT=3000 mocha todoServer.js tests/**/*.js --delay --exit",
+    "start": "cross-env URL=mongodb://127.0.0.1:27017/todo DB_NAME=todo COLLECTION_NAME=todos PORT=3000 node todoServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://cdb00655a82b23069636f3ff07fa5bde08445e61:x-oauth-basic@github.com/bobjones31451717/samuel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bobjones31451717/samuel/issues"
+  },
+  "homepage": "https://github.com/bobjones31451717/samuel#readme"
+}
