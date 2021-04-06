@@ -11,16 +11,22 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "global-time": "^1.4.1",
     "joi": "^17.4.0",
+    "lint-fix": "^0.24.0",
     "mocha": "^8.3.2",
     "mongodb": "^3.6.4",
     "should": "^13.2.3",
     "should-http": "^0.1.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-plugin-mocha": "^8.1.0"
+  },
   "scripts": {
-    "test": "cross-env URL=mongodb://127.0.0.1:27017/todoTest DB_NAME=todoTest COLLECTION_NAME=todosTest PORT=3000 mocha todoServer.js tests/**/*.js --delay --exit",
-    "start": "cross-env URL=mongodb://127.0.0.1:27017/todo DB_NAME=todo COLLECTION_NAME=todos PORT=3000 node todoServer.js"
+    "test": "cross-env URL=mongodb://127.0.0.1:27017/todoTest TEST=true DB_NAME=todoTest COLLECTION_NAME=todosTest PORT=3000 mocha todoServer.js tests/**/*.js --delay --exit",
+    "start": "cross-env URL=mongodb://127.0.0.1:27017/todo DB_NAME=todo COLLECTION_NAME=todos PORT=3000 node todoServer.js",
+    "lint": "eslint --fix **/*.js"
   },
   "repository": {
     "type": "git",
