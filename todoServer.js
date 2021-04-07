@@ -1,12 +1,12 @@
 const express = require('express');
 const middlewares = require('./middlewares.js');
-const router = require('./router.js');
+const todoRouter = require('./todoRouter.js');
 const { DB }  = require('./connection.js');
 
 const app = express();
 
 app.use('/', middlewares);
-app.use('/', router);
+app.use('/', todoRouter);
 
 
 ( async () => {
@@ -22,6 +22,7 @@ app.use('/', router);
   }
 }
 )();
+
 app.listen(process.env.PORT)
 
 module.exports = app;

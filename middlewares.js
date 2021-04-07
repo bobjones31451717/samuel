@@ -1,6 +1,5 @@
 const { DB }  = require('./connection.js');
 const { addTodoSchema, idSchema, checkedSchema } = require('./validation.js');
-const globalTime = require('global-time');
 
 module.exports = (function() {
 
@@ -10,7 +9,18 @@ module.exports = (function() {
   const middlewares = require('express').Router();
 
   middlewares.use(bodyParser.json());
+
   middlewares.use(express.urlencoded({ extended: true }));
+
+  middlewares.use('/', async function(req, res, next)  {
+    if(!process.env.TEST){
+      const time = new Date();
+      const date = time.getTime();
+      await DB.insertOne(process.env.DB_NAME, 'log', { 'method' : req.method, 'date': date , url : req.url });
+    }
+    next();
+});
+
   middlewares.use((err, req, res, next) => {
     if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
         return res.status(400).send();

@@ -18,13 +18,14 @@ function makeid(length) {
   return result;
 }
 
-describe('/POST todos', function() {
+describe('/POST todo', function() {
   it('it should post a todo with random id', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/' + id;
     let todo = {
       messege:'walk the dog'
     };
+
     chai.request(server)
       .post(route)
       .send(todo)
@@ -36,7 +37,8 @@ describe('/POST todos', function() {
         done();
       });
   });
-  it('check if it throw an error on any number of chars in id different then 5', function(done) {
+
+  it('check if it throw an error on any number of chars in id different then 36', function(done) {
     const id = makeid(6);
     const route = '/todo/' + id;
     let todo = {
@@ -50,8 +52,9 @@ describe('/POST todos', function() {
         done();
       });
   });
+
   it('asserting with the same id, should throw exeption', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/' + id;
     let dataPreperetion = {
       _id: id,
@@ -61,6 +64,7 @@ describe('/POST todos', function() {
     let todo = {
       messege:'walk the dog'
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .post(route)
@@ -72,6 +76,7 @@ describe('/POST todos', function() {
     });
   });
 });
+
 describe('/GET todos', function() {
   it('get zero documents for not adding to db enything', function(done) {
     const route = '/todos';
@@ -83,8 +88,9 @@ describe('/GET todos', function() {
         done();
       });
   });
+
   it('get one document after adding to db document', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     let dataPreperetion = {
       _id: id,
       messege:'walk the dog',
@@ -104,9 +110,10 @@ describe('/GET todos', function() {
     });
   });
 });
-describe('/patch todos', function() {
+
+describe('/patch todo', function() {
   it('test if massege updated', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
@@ -116,6 +123,7 @@ describe('/patch todos', function() {
     let todo = {
       messege:'walk the hyena'
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -127,8 +135,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('should return error if massege is less then 2 chars', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
@@ -138,6 +147,7 @@ describe('/patch todos', function() {
     let todo = {
       messege:'q'
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -148,8 +158,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('should return error if massege is over 99 chars', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
@@ -159,6 +170,7 @@ describe('/patch todos', function() {
     let todo = {
       messege:'happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!'
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -169,8 +181,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('should return error if massege is not in the body of the request', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
@@ -180,6 +193,7 @@ describe('/patch todos', function() {
     let todo = {
 
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -190,8 +204,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('test if checked updated', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
@@ -201,6 +216,7 @@ describe('/patch todos', function() {
     let todo = {
       checked:true
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -212,8 +228,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('test if we get an error if not supply boolean in checked property', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
@@ -223,6 +240,7 @@ describe('/patch todos', function() {
     let todo = {
       checked:'notBoll'
     };
+
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .patch(route)
@@ -233,8 +251,9 @@ describe('/patch todos', function() {
         });
     });
   });
+
   it('test if we dont get any checked property, should throw an error', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
@@ -255,7 +274,7 @@ describe('/patch todos', function() {
     });
   });
   it('test if returns an error on id that not in db', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/messege/' + id;
     const shiftedId = id.substr(1) + id.substr(0, 1);
     let dataPreperetion = {
@@ -278,9 +297,9 @@ describe('/patch todos', function() {
   });
 });
 
-describe('/delete todos', function() {
+describe('/delete todo', function() {
   it('tryng to delete an object from db', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/' + id;
     let dataPreperetion = {
       _id: id,
@@ -298,7 +317,7 @@ describe('/delete todos', function() {
     });
   });
   it('test if returns an error on id that not in db', function(done) {
-    const id = makeid(5);
+    const id = makeid(36);
     const route = '/todo/' + id;
     const shiftedId = id.substr(1) + id.substr(0, 1);
     let dataPreperetion = {
