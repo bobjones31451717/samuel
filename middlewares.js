@@ -11,18 +11,17 @@ module.exports = (function() {
 
   middlewares.use(bodyParser.json());
   middlewares.use(express.urlencoded({ extended: true }));
-  middlewares.use('/', async function (req, res, next) {
-    if(!process.env.TEST){
-    const time = await globalTime();
-    const date = new Date(time);
-    await DB.insertOne(process.env.DB_NAME, 'log', { 'method' : req.method, 'date': date });
+  middlewares.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).send();
     }
+
     next();
-  });
+});
   middlewares.post('/todo/:id', async function (req, res, next) {
     try{
-      res.locals.todo_to_add = await addTodoSchema.validateAsync(req.body);
-      res.locals.id = await idSchema.validateAsync({ '_id' : req.params.id }); 
+      await addTodoSchema.validateAsync(req.body);
+      await idSchema.validateAsync({ '_id' : req.params.id }); 
       next();
     }
     catch(error){
@@ -31,17 +30,17 @@ module.exports = (function() {
   });
   middlewares.delete('/todo/:id', async function (req, res, next) {
     try{
-      res.locals.id = await idSchema.validateAsync({ '_id' : req.params.id }); 
+      await idSchema.validateAsync({ '_id' : req.params.id }); 
       next();
     }
     catch(error){
       return res.status(422).send(error.message);
     }
   });
-  middlewares.patch('/todo/mssg/:id', async function (req, res, next) {
+  middlewares.patch('/todo/messege/:id', async function (req, res, next) {
     try{
-      res.locals.todo_to_update = await addTodoSchema.validateAsync(req.body);
-      res.locals.id = await idSchema.validateAsync({ '_id' : req.params.id }); 
+      await addTodoSchema.validateAsync(req.body);
+      await idSchema.validateAsync({ '_id' : req.params.id }); 
       next();
     }
     catch(error){
@@ -51,8 +50,8 @@ module.exports = (function() {
       
   middlewares.patch('/todo/checked/:id', async function (req, res, next) {
     try{
-      res.locals.checked = await checkedSchema.validateAsync(req.body);
-      res.locals.id = await idSchema.validateAsync({ '_id' : req.params.id }); 
+      await checkedSchema.validateAsync(req.body);
+      await idSchema.validateAsync({ '_id' : req.params.id }); 
       next();
     }
     catch(error){

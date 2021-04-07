@@ -1,12 +1,12 @@
 const express = require('express');
 const middlewares = require('./middlewares.js');
-const externalRoutes = require('./externalRoutes.js');
+const router = require('./router.js');
 const { DB }  = require('./connection.js');
 
 const app = express();
 
 app.use('/', middlewares);
-app.use('/', externalRoutes);
+app.use('/', router);
 
 
 ( async () => {
@@ -22,6 +22,6 @@ app.use('/', externalRoutes);
   }
 }
 )();
+app.listen(process.env.PORT)
 
-
-module.exports = app.listen(process.env.PORT);
+module.exports = app;

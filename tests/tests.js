@@ -23,14 +23,14 @@ describe('/POST todos', function() {
     const id = makeid(5);
     const route = '/todo/' + id;
     let todo = {
-      mssg:'walk the dog'
+      messege:'walk the dog'
     };
     chai.request(server)
       .post(route)
       .send(todo)
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property('mssg').eql('walk the dog');
+        res.body.should.have.property('messege').eql('walk the dog');
         res.body.should.have.property('_id').eql(id);
         res.body.should.have.property('checked').eql(false);
         done();
@@ -40,7 +40,7 @@ describe('/POST todos', function() {
     const id = makeid(6);
     const route = '/todo/' + id;
     let todo = {
-      mssg:'walk the dog'
+      messege:'walk the dog'
     };
     chai.request(server)
       .post(route)
@@ -55,18 +55,18 @@ describe('/POST todos', function() {
     const route = '/todo/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
-      mssg:'walk the dog'
+      messege:'walk the dog'
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
         .post(route)
         .send(todo)
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(400);
           done();
         });
     });
@@ -79,7 +79,7 @@ describe('/GET todos', function() {
       .get(route) 
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.eql([]);
+        res.body.should.eql({todos:[]});
         done();
       });
   });
@@ -87,7 +87,7 @@ describe('/GET todos', function() {
     const id = makeid(5);
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
@@ -96,9 +96,9 @@ describe('/GET todos', function() {
         .get(getRoute) 
         .end((err, res) => {
           res.should.have.status(200);
-          res.body[0].should.have.property('mssg').eql('walk the dog');
-          res.body[0].should.have.property('_id').eql(id);
-          res.body[0].should.have.property('checked').eql(false);
+          res.body.todos[0].should.have.property('messege').eql('walk the dog');
+          res.body.todos[0].should.have.property('_id').eql(id);
+          res.body.todos[0].should.have.property('checked').eql(false);
           done();
         });
     });
@@ -107,14 +107,14 @@ describe('/GET todos', function() {
 describe('/patch todos', function() {
   it('test if massege updated', function(done) {
     const id = makeid(5);
-    const route = '/todo/mssg/' + id;
+    const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
-      mssg:'walk the hyena'
+      messege:'walk the hyena'
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
@@ -122,21 +122,21 @@ describe('/patch todos', function() {
         .send(todo)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('mssg').eql('walk the hyena');
+          res.body.should.have.property('messege').eql('walk the hyena');
           done();
         });
     });
   });
   it('should return error if massege is less then 2 chars', function(done) {
     const id = makeid(5);
-    const route = '/todo/mssg/' + id;
+    const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
-      mssg:'q'
+      messege:'q'
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
@@ -150,14 +150,14 @@ describe('/patch todos', function() {
   });
   it('should return error if massege is over 99 chars', function(done) {
     const id = makeid(5);
-    const route = '/todo/mssg/' + id;
+    const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
-      mssg:'happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!'
+      messege:'happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!happy passover! happy passover! happy passover! happy passover!'
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
       chai.request(server)
@@ -171,10 +171,10 @@ describe('/patch todos', function() {
   });
   it('should return error if massege is not in the body of the request', function(done) {
     const id = makeid(5);
-    const route = '/todo/mssg/' + id;
+    const route = '/todo/messege/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
@@ -195,7 +195,7 @@ describe('/patch todos', function() {
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
@@ -217,7 +217,7 @@ describe('/patch todos', function() {
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
@@ -238,7 +238,7 @@ describe('/patch todos', function() {
     const route = '/todo/checked/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     let todo = {
@@ -254,6 +254,28 @@ describe('/patch todos', function() {
         });
     });
   });
+  it('test if returns an error on id that not in db', function(done) {
+    const id = makeid(5);
+    const route = '/todo/messege/' + id;
+    const shiftedId = id.substr(1) + id.substr(0, 1);
+    let dataPreperetion = {
+      _id: shiftedId,
+      messege:'walk the dog',
+      checked:false
+    };
+    let todo = {
+      messege:'walk the hyena'
+    };
+    DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
+      chai.request(server)
+        .patch(route)
+        .send(todo)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
 });
 
 describe('/delete todos', function() {
@@ -262,7 +284,7 @@ describe('/delete todos', function() {
     const route = '/todo/' + id;
     let dataPreperetion = {
       _id: id,
-      mssg:'walk the dog',
+      messege:'walk the dog',
       checked:false
     };
     DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
@@ -271,6 +293,28 @@ describe('/delete todos', function() {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('_id').eql(id);
+          done();
+        });
+    });
+  });
+  it('test if returns an error on id that not in db', function(done) {
+    const id = makeid(5);
+    const route = '/todo/' + id;
+    const shiftedId = id.substr(1) + id.substr(0, 1);
+    let dataPreperetion = {
+      _id: shiftedId,
+      messege:'walk the dog',
+      checked:false
+    };
+    let todo = {
+      messege:'walk the hyena'
+    };
+    DB.insertOne(process.env.DB_NAME, process.env.COLLECTION_NAME, dataPreperetion).then(() =>{
+      chai.request(server)
+        .delete(route)
+        .send(todo)
+        .end((err, res) => {
+          res.should.have.status(400);
           done();
         });
     });
